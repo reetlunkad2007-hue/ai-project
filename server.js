@@ -55,7 +55,7 @@ app.use(express.json());
 
 // Serve your static files (index.html, style.css, app.js)
 // from the same folder as this server.js
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(__dirname));
 
 // ─────────────────────────────────────────
 // STEP 3 ▸ Groq Config (server-side only)
