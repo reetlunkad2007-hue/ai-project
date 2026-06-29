@@ -191,8 +191,8 @@ app.post("/api/summarize", async (req, res) => {
 // (important when you have multiple pages)
 // ─────────────────────────────────────────
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // ─────────────────────────────────────────
