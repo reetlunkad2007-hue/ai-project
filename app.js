@@ -4,7 +4,7 @@
 
 // ── CONFIG ──
 const API_URL = "/api/summarize";
-
+const API_URL="/api/chat";
 // ── CHARACTER COUNTER ──
 const inputTextEl = document.getElementById("inputText");
 const charCountEl = document.getElementById("charCount");
@@ -93,6 +93,15 @@ async function handleSummarize() {
   document.getElementById("copyConfirm").hidden = true;
 
   setButtonLoading(false);
+  window.currentSummary = summary;
+
+const chatSection = document.getElementById("chatSection");
+
+if (chatSection) {
+
+    chatSection.hidden = false;
+
+}
   showState("outputResult");
   } catch (err) {
     console.error("Groq error:", err);
@@ -181,6 +190,15 @@ function clearAll() {
     showState("outputIdle");
 
     setButtonLoading(false);
+
+}
+window.currentSummary = "";
+
+const chatSection = document.getElementById("chatSection");
+
+if(chatSection){
+
+    chatSection.hidden = true;
 
 }
 
