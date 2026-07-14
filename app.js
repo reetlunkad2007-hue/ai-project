@@ -104,10 +104,16 @@ if (chatSection) {
 }
   showState("outputResult");
   } catch (err) {
-    console.error("Groq error:", err);
-    document.getElementById("errorMessage").textContent = err.message || "API call failed. Check the browser console.";
+
+    console.error("Full Error:", err);
+
+    document.getElementById("errorMessage").textContent =
+        err.message;
+
     showState("outputError");
-  } finally {
+
+}
+finally {
     setButtonLoading(false);
   }
 }
@@ -127,10 +133,17 @@ async function callGroqAPI(text, style) {
 
   const data = await res.json();
 
-  if (!res.ok) {
-    throw new Error(data.error || "Request failed");
-  }
+console.log("Server Response:", data);
 
+if (!res.ok) {
+
+    throw new Error(
+        data.error ||
+        data.message ||
+        "Request failed"
+    );
+
+}
   return data.summary;
 }
 
@@ -170,6 +183,17 @@ async function copyResult() {
 function clearAll() {
 
     inputTextEl.value = "";
+    if(documentInput){
+
+    documentInput.value="";
+
+}
+
+if(fileName){
+
+    fileName.textContent="No file selected";
+
+}
 
     charCountEl.textContent = "0";
 
