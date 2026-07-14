@@ -139,7 +139,119 @@ Upload Document
           <span id="copyConfirm" class="copy-confirm" hidden>Copied!</span>
         </div>
       </div>
+<!-- ==========================
+     AI CHAT SECTION
+========================== -->
 
+<div id="chatSection" class="chat-section" hidden>
+
+    <h3 class="chat-title">
+        Ask AI about this Summary
+    </h3>
+
+    <div class="suggested-questions">
+
+        <button
+class="suggest-btn"
+onclick="askSuggestion(this)">
+
+What is the main idea?
+
+</button>
+        <button
+class="suggest-btn"
+onclick="askSuggestion(this)">
+
+Explain this simply.
+
+</button>
+
+        <button
+class="suggest-btn"
+onclick="askSuggestion(this)">
+
+List important points.
+
+</button>
+
+        <button
+class="suggest-btn"
+onclick="askSuggestion(this)">
+
+Give the conclusion.
+
+</button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages">
+<div
+id="typingIndicator"
+class="typing"
+hidden>
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+        <div
+id="chatPlaceholder"
+class="chat-placeholder">
+
+Generate a summary to start chatting.
+
+</div>
+    </div>
+
+    <div class="chat-input-area">
+
+        <textarea
+id="chatInput"
+rows="2"
+maxlength="500"
+placeholder="Generate a summary first..."
+disabled
+onkeydown="handleChatKey(event)">
+</textarea>
+<div class="chat-counter">
+
+<span id="chatCount">
+
+0
+
+</span>
+
+/
+
+500
+
+</div>
+        <div class="chat-buttons">
+
+            <button
+id="sendChatBtn"
+class="btn-send"
+onclick="sendQuestion()"
+disabled>
+
+Send
+
+</button>
+            
+
+            <button
+                class="btn-clear-chat"
+                onclick="clearChat()">
+
+                Clear Chat
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
     </section>
 
   </main>
@@ -148,5 +260,8 @@ Upload Document
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.7.2/mammoth.browser.min.js"></script>
 
 <script src="app.js"></script>
+
+<script src="chat.js"></script>
+
 </body>
 </html>
