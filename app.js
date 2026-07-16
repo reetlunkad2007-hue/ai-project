@@ -4,7 +4,12 @@
 
 // ── CONFIG ──
 const API_URL = "/api/summarize";
-const API_URL="/api/chat";
+
+// ── CHAT MEMORY (session only — cleared when page closes) ──
+let chatHistory    = [];   // stores full conversation for the API
+let currentSummary = '';   // the summary the chat is based on
+let chatOpen       = false;
+
 // ── CHARACTER COUNTER ──
 const inputTextEl = document.getElementById("inputText");
 const charCountEl = document.getElementById("charCount");
@@ -93,27 +98,13 @@ async function handleSummarize() {
   document.getElementById("copyConfirm").hidden = true;
 
   setButtonLoading(false);
-  window.currentSummary = summary;
-
-const chatSection = document.getElementById("chatSection");
-
-if (chatSection) {
-
-    chatSection.hidden = false;
-
-}
   showState("outputResult");
+  currentSummary = summary;
   } catch (err) {
-
-    console.error("Full Error:", err);
-
-    document.getElementById("errorMessage").textContent =
-        err.message;
-
+    console.error("Groq error:", err);
+    document.getElementById("errorMessage").textContent = err.message || "API call failed. Check the browser console.";
     showState("outputError");
-
-}
-finally {
+  } finally {
     setButtonLoading(false);
   }
 }
@@ -133,17 +124,10 @@ async function callGroqAPI(text, style) {
 
   const data = await res.json();
 
-console.log("Server Response:", data);
+  if (!res.ok) {
+    throw new Error(data.error || "Request failed");
+  }
 
-if (!res.ok) {
-
-    throw new Error(
-        data.error ||
-        data.message ||
-        "Request failed"
-    );
-
-}
   return data.summary;
 }
 
@@ -183,17 +167,6 @@ async function copyResult() {
 function clearAll() {
 
     inputTextEl.value = "";
-    if(documentInput){
-
-    documentInput.value="";
-
-}
-
-if(fileName){
-
-    fileName.textContent="No file selected";
-
-}
 
     charCountEl.textContent = "0";
 
@@ -214,15 +187,6 @@ if(fileName){
     showState("outputIdle");
 
     setButtonLoading(false);
-
-}
-window.currentSummary = "";
-
-const chatSection = document.getElementById("chatSection");
-
-if(chatSection){
-
-    chatSection.hidden = true;
 
 }
 
@@ -558,4 +522,153 @@ async function readPDF(file) {
 
     charCountEl.textContent = text.length;
 
+}
+// ════════════════════════════════════════
+// CHAT SYSTEM
+// Memory lives in chatHistory array (session only).
+// Cleared automatically when tab/browser closes.
+// ════════════════════════════════════════
+
+function openChat() {
+  // Reset chat memory whenever a new summary opens chat
+  chatHistory = [];
+
+  // Seed the conversation with the summary as context
+  // This is the system-level knowledge the AI has
+  chatHistory.push({
+    role: 'user',
+    content:
+      `Here is a summary that was just generated. Use it as the context for all my questions. ` +
+      `Summary:\n"""\n${currentSummary}\n"""\n\nAcknowledge you have read it in one short sentence.`
+  });
+
+  // Show chat section
+  document.getElementById('chatSection').style.display = 'flex';
+  document.getElementById('chatSection').style.flexDirection = 'column';
+
+  // Clear previous messages, show only the welcome bubble
+  const messagesEl = document.getElementById('chatMessages');
+  messagesEl.innerHTML = `
+    <div class="chat-bubble chat-bubble--ai">
+      <span class="bubble-icon">✦</span>
+      <p>I've read the summary. Ask me anything about it — I'll remember our conversation as long as this page is open.</p>
+    </div>`;
+
+  // Scroll chat into view
+  document.getElementById('chatSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => document.getElementById('chatInput').focus(), 400);
+
+  chatOpen = true;
+}
+
+function closeChat() {
+  document.getElementById('chatSection').style.display = 'none';
+  chatOpen = false;
+  // Note: chatHistory is NOT cleared here so reopening resumes the same session.
+  // It only clears when openChat() is called again (new summary) or page closes.
+}
+
+async function sendChatMessage() {
+  const input  = document.getElementById('chatInput');
+  const question = input.value.trim();
+  if (!question) return;
+
+  // Disable input while waiting
+  input.value = '';
+  input.disabled = true;
+  document.getElementById('chatBtnText').hidden   = true;
+  document.getElementById('chatBtnLoader').hidden = false;
+  document.querySelector('.chat-send-btn').disabled = true;
+
+  // Show user bubble
+  appendBubble('user', question);
+
+  // Add user message to memory
+  chatHistory.push({ role: 'user', content: question });
+
+  // Show typing indicator
+  const typingId = showTyping();
+
+  try {
+    const reply = await callGroqChat(chatHistory);
+
+    // Add AI reply to memory (this is how it remembers previous messages)
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    removeTyping(typingId);
+    appendBubble('ai', reply);
+
+  } catch (err) {
+    removeTyping(typingId);
+    appendBubble('ai', '⚠ Sorry, something went wrong: ' + (err.message || 'API error'));
+  } finally {
+    input.disabled = false;
+    input.focus();
+    document.getElementById('chatBtnText').hidden   = false;
+    document.getElementById('chatBtnLoader').hidden = true;
+    document.querySelector('.chat-send-btn').disabled = false;
+  }
+}
+
+// Calls Groq with the full conversation history each time
+async function callGroqChat(history) {
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ messages: history })
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Chat API failed');
+  return data.reply;
+}
+
+// ── UI helpers ──
+function appendBubble(role, text) {
+  const messagesEl = document.getElementById('chatMessages');
+
+  const bubble = document.createElement('div');
+  bubble.className = `chat-bubble chat-bubble--${role === 'user' ? 'user' : 'ai'}`;
+
+  const icon = role === 'user'
+    ? `<span class="bubble-user-icon">👤</span>`
+    : `<span class="bubble-icon">✦</span>`;
+
+  bubble.innerHTML = `${icon}<p>${escapeHTML(text)}</p>`;
+  messagesEl.appendChild(bubble);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function showTyping() {
+  const messagesEl = document.getElementById('chatMessages');
+  const id = 'typing-' + Date.now();
+
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble chat-bubble--ai chat-bubble--typing';
+  bubble.id = id;
+  bubble.innerHTML = `
+    <span class="bubble-icon">✦</span>
+    <p>
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+      <span class="typing-dot"></span>
+    </p>`;
+
+  messagesEl.appendChild(bubble);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/\n/g, '<br>');
 }
