@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════
    SummarAI – style.css
-   Palette: soft sky bg, vivid blue accent,
-   deep slate-blue text, crisp white panels
+   Palette: beige bg, coffee brown accent,
+   espresso text, cream panels
    ════════════════════════════════════════ */
 
 /* ── Reset & Base ── */
@@ -12,18 +12,18 @@
 }
 
 :root {
-  --bg:          #eaf2fc;        /* soft sky blue */
-  --panel-bg:    #ffffff;        /* white panel */
-  --panel-border:#cbdcf2;        /* light blue border */
-  --accent:      #2f6fed;        /* vivid blue */
-  --accent-glow: rgba(47, 111, 237, 0.2);
-  --accent-hover:#528cf5;
-  --text-primary:#16283f;        /* deep slate blue */
-  --text-muted:  #8199b8;
-  --text-label:  #4f6c8f;
-  --error-bg:    #fdecec;
-  --error-color: #d6453f;
-  --success:     #2f9e5e;
+  --bg:          #efe4d4;        /* beige */
+  --panel-bg:    #fbf5ea;        /* cream panel */
+  --panel-border:#ddc9ac;        /* warm tan border */
+  --accent:      #6f4632;        /* coffee brown */
+  --accent-glow: rgba(111, 70, 50, 0.2);
+  --accent-hover:#8a5c40;
+  --text-primary:#3c2a1e;        /* espresso */
+  --text-muted:  #a08d76;
+  --text-label:  #7a6248;
+  --error-bg:    #fbebe6;
+  --error-color: #b5432c;
+  --success:     #5c7a4a;
   --radius:      14px;
   --radius-sm:   8px;
   --font-display:'Space Grotesk', sans-serif;
@@ -45,8 +45,8 @@ body {
   flex-direction: column;
   /* Subtle grid texture */
   background-image:
-    linear-gradient(rgba(47,111,237,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(47,111,237,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(111,70,50,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(111,70,50,0.05) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -106,7 +106,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  box-shadow: 0 1px 3px rgba(22, 40, 63, 0.06);
+  box-shadow: 0 1px 3px rgba(42, 38, 33, 0.04);
 }
 
 .panel-label {
@@ -121,7 +121,7 @@ body {
 /* ── Textarea ── */
 .text-area {
   flex: 1;
-  background: rgba(22,40,63,0.02);
+  background: rgba(60,42,30,0.02);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
@@ -400,7 +400,7 @@ body {
 }
 
 .btn-copy {
-  background: rgba(47,111,237,0.08);
+  background: rgba(111,70,50,0.08);
   border: 1px solid var(--accent);
   color: var(--accent);
   font-family: var(--font-body);
@@ -412,7 +412,7 @@ body {
 }
 
 .btn-copy:hover {
-  background: rgba(47,111,237,0.18);
+  background: rgba(111,70,50,0.18);
 }
 
 .copy-confirm {
@@ -471,7 +471,7 @@ body {
 }
 /* ── Download Buttons ── */
 .btn-download {
-  background: rgba(47,111,237,0.06);
+  background: rgba(111,70,50,0.06);
   border: 1px solid var(--panel-border);
   color: var(--text-label);
   font-family: var(--font-body);
@@ -483,7 +483,7 @@ body {
 }
 
 .btn-download:hover {
-  background: rgba(47,111,237,0.16);
+  background: rgba(111,70,50,0.16);
   border-color: var(--accent);
   color: var(--accent-hover);
 }
@@ -538,7 +538,7 @@ word-break:break-all;
 }
 /* ── Ask AI Button ── */
 .btn-chat {
-  background: rgba(47,111,237,0.08);
+  background: rgba(111,70,50,0.08);
   border: 1px solid var(--accent);
   color: var(--accent);
   font-family: var(--font-body);
@@ -550,7 +550,7 @@ word-break:break-all;
 }
 
 .btn-chat:hover {
-  background: rgba(47,111,237,0.2);
+  background: rgba(111,70,50,0.2);
 }
 
 /* ── Chat Section ── */
@@ -575,7 +575,7 @@ word-break:break-all;
   gap: 12px;
   padding: 16px 20px;
   border-bottom: 1px solid var(--panel-border);
-  background: rgba(47,111,237,0.05);
+  background: rgba(111,70,50,0.05);
 }
 
 .chat-header-icon {
@@ -609,7 +609,7 @@ word-break:break-all;
 
 .chat-close-btn:hover {
   color: var(--text-primary);
-  background: rgba(22,40,63,0.05);
+  background: rgba(60,42,30,0.05);
 }
 
 /* ── Chat Messages ── */
@@ -655,7 +655,7 @@ word-break:break-all;
 }
 
 .chat-bubble p {
-  background: rgba(22,40,63,0.03);
+  background: rgba(60,42,30,0.03);
   border: 1px solid var(--panel-border);
   border-radius: 10px;
   padding: 10px 14px;
@@ -666,8 +666,8 @@ word-break:break-all;
 }
 
 .chat-bubble--user p {
-  background: rgba(47,111,237,0.1);
-  border-color: rgba(47,111,237,0.28);
+  background: rgba(111,70,50,0.1);
+  border-color: rgba(111,70,50,0.28);
   color: var(--text-primary);
 }
 
@@ -695,12 +695,12 @@ word-break:break-all;
   gap: 10px;
   padding: 14px 20px;
   border-top: 1px solid var(--panel-border);
-  background: rgba(22,40,63,0.02);
+  background: rgba(60,42,30,0.02);
 }
 
 .chat-input {
   flex: 1;
-  background: rgba(22,40,63,0.02);
+  background: rgba(60,42,30,0.02);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
