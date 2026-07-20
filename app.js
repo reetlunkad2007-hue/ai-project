@@ -138,7 +138,7 @@ function showWarning(msg) {
   div.id = "inlineWarning";
   div.textContent = "⚠ " + msg;
   div.style.cssText =
-    "background:#1f1a0e;border:1px solid #f59e0b;color:#f59e0b;" +
+    "background:#fdf1dc;border:1px solid #b5732b;color:#8a5620;" +
     "border-radius:8px;padding:10px 14px;font-size:0.84rem;margin-top:8px;";
   inputTextEl.parentNode.insertBefore(div, inputTextEl.nextSibling);
   setTimeout(removeWarning, 4000);
@@ -245,7 +245,7 @@ function generatePDF(text, btn) {
   let cursorY       = marginTop;
 
   // ── Header bar ──
-  doc.setFillColor(124, 92, 252);           // violet accent
+  doc.setFillColor(111, 70, 50);            // coffee brown accent
   doc.rect(0, 0, pageWidth, 14, 'F');
 
   doc.setFont('helvetica', 'bold');
@@ -260,14 +260,14 @@ function generatePDF(text, btn) {
   // ── Title ──
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
-  doc.setTextColor(20, 20, 40);
+  doc.setTextColor(60, 42, 30);              // espresso
   doc.text('Summary', marginLeft, cursorY);
   cursorY += 7;
 
   // ── Date line ──
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
-  doc.setTextColor(140, 140, 160);
+  doc.setTextColor(160, 141, 118);           // muted tan
   const dateStr = new Date().toLocaleDateString('en-IN', {
     year: 'numeric', month: 'long', day: 'numeric'
   });
@@ -275,7 +275,7 @@ function generatePDF(text, btn) {
   cursorY += 3;
 
   // ── Divider ──
-  doc.setDrawColor(220, 220, 235);
+  doc.setDrawColor(221, 201, 172);           // warm tan border
   doc.setLineWidth(0.4);
   doc.line(marginLeft, cursorY + 1, pageWidth - marginRight, cursorY + 1);
   cursorY += 10;
@@ -283,7 +283,7 @@ function generatePDF(text, btn) {
   // ── Body text ──
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(11);
-  doc.setTextColor(30, 30, 50);
+  doc.setTextColor(60, 42, 30);              // espresso
 
   const lines = text.split('\n').filter(l => l.trim());
   const isBullets = lines.some(l => l.trim().startsWith('•'));
@@ -304,9 +304,9 @@ function generatePDF(text, btn) {
 
     // Draw bullet dot in accent color
     if (isBullets) {
-      doc.setTextColor(124, 92, 252);
+      doc.setTextColor(111, 70, 50);         // coffee brown accent
       doc.text('•', marginLeft, cursorY);
-      doc.setTextColor(30, 30, 50);
+      doc.setTextColor(60, 42, 30);          // espresso
       // Indent the text after the bullet
       const indentedLines = doc.splitTextToSize(cleanLine, maxWidth - 6);
       doc.text(indentedLines, marginLeft + 6, cursorY);
@@ -323,7 +323,7 @@ function generatePDF(text, btn) {
     doc.setPage(i);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
-    doc.setTextColor(180, 180, 200);
+    doc.setTextColor(160, 141, 118);         // muted tan
     doc.text(
       `Page ${i} of ${totalPages}`,
       pageWidth / 2,
