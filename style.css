@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════
    SummarAI – style.css
-   Palette: deep navy bg, electric violet accent,
-   warm off-white text, soft glass panels
+   Palette: warm ivory bg, coral accent,
+   charcoal text, soft paper panels
    ════════════════════════════════════════ */
 
 /* ── Reset & Base ── */
@@ -12,18 +12,18 @@
 }
 
 :root {
-  --bg:          #0d0f1a;        /* deep navy */
-  --panel-bg:    #13162a;        /* slightly lighter panel */
-  --panel-border:#1e2340;        /* subtle border */
-  --accent:      #7c5cfc;        /* electric violet */
-  --accent-glow: rgba(124, 92, 252, 0.25);
-  --accent-hover:#9b82fd;
-  --text-primary:#eef0fb;        /* warm off-white */
-  --text-muted:  #6b7199;
-  --text-label:  #9da3c8;
-  --error-bg:    #1f0e0e;
-  --error-color: #fc5c5c;
-  --success:     #4ade80;
+  --bg:          #faf8f4;        /* warm ivory */
+  --panel-bg:    #ffffff;        /* white panel */
+  --panel-border:#e6e1d8;        /* subtle warm border */
+  --accent:      #ec6a4f;        /* coral */
+  --accent-glow: rgba(236, 106, 79, 0.18);
+  --accent-hover:#f38669;
+  --text-primary:#2a2621;        /* charcoal */
+  --text-muted:  #948d81;
+  --text-label:  #6f675b;
+  --error-bg:    #fdeeee;
+  --error-color: #d64545;
+  --success:     #2f9e5e;
   --radius:      14px;
   --radius-sm:   8px;
   --font-display:'Space Grotesk', sans-serif;
@@ -45,8 +45,8 @@ body {
   flex-direction: column;
   /* Subtle grid texture */
   background-image:
-    linear-gradient(rgba(124,92,252,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(124,92,252,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(236,106,79,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236,106,79,0.05) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -106,6 +106,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0 1px 3px rgba(42, 38, 33, 0.04);
 }
 
 .panel-label {
@@ -120,7 +121,7 @@ body {
 /* ── Textarea ── */
 .text-area {
   flex: 1;
-  background: rgba(255,255,255,0.03);
+  background: rgba(42,38,33,0.02);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
@@ -201,7 +202,7 @@ body {
 
 .style-option input[type="radio"]:checked + .style-card {
   border-color: var(--accent);
-  background: rgba(124, 92, 252, 0.1);
+  background: rgba(236, 106, 79, 0.08);
 }
 
 .style-card:hover {
@@ -399,7 +400,7 @@ body {
 }
 
 .btn-copy {
-  background: rgba(124,92,252,0.12);
+  background: rgba(236,106,79,0.08);
   border: 1px solid var(--accent);
   color: var(--accent);
   font-family: var(--font-body);
@@ -411,7 +412,7 @@ body {
 }
 
 .btn-copy:hover {
-  background: rgba(124,92,252,0.25);
+  background: rgba(236,106,79,0.18);
 }
 
 .copy-confirm {
@@ -470,7 +471,7 @@ body {
 }
 /* ── Download Buttons ── */
 .btn-download {
-  background: rgba(124,92,252,0.08);
+  background: rgba(236,106,79,0.06);
   border: 1px solid var(--panel-border);
   color: var(--text-label);
   font-family: var(--font-body);
@@ -482,7 +483,7 @@ body {
 }
 
 .btn-download:hover {
-  background: rgba(124,92,252,0.2);
+  background: rgba(236,106,79,0.16);
   border-color: var(--accent);
   color: var(--accent-hover);
 }
@@ -501,7 +502,7 @@ margin-top:18px;
 
 .btn-upload{
 
-background:#5d5fef;
+background:var(--accent);
 color:white;
 
 border:none;
@@ -520,7 +521,7 @@ transition:.3s;
 
 .btn-upload:hover{
 
-background:#4346d4;
+background:var(--accent-hover);
 
 transform:translateY(-2px);
 
@@ -530,14 +531,14 @@ transform:translateY(-2px);
 
 font-size:14px;
 
-color:#bdbdbd;
+color:var(--text-muted);
 
 word-break:break-all;
 
 }
 /* ── Ask AI Button ── */
 .btn-chat {
-  background: rgba(124,92,252,0.12);
+  background: rgba(236,106,79,0.08);
   border: 1px solid var(--accent);
   color: var(--accent);
   font-family: var(--font-body);
@@ -549,7 +550,7 @@ word-break:break-all;
 }
 
 .btn-chat:hover {
-  background: rgba(124,92,252,0.28);
+  background: rgba(236,106,79,0.2);
 }
 
 /* ── Chat Section ── */
@@ -574,7 +575,7 @@ word-break:break-all;
   gap: 12px;
   padding: 16px 20px;
   border-bottom: 1px solid var(--panel-border);
-  background: rgba(124,92,252,0.07);
+  background: rgba(236,106,79,0.05);
 }
 
 .chat-header-icon {
@@ -608,7 +609,7 @@ word-break:break-all;
 
 .chat-close-btn:hover {
   color: var(--text-primary);
-  background: rgba(255,255,255,0.06);
+  background: rgba(42,38,33,0.05);
 }
 
 /* ── Chat Messages ── */
@@ -654,7 +655,7 @@ word-break:break-all;
 }
 
 .chat-bubble p {
-  background: rgba(255,255,255,0.04);
+  background: rgba(42,38,33,0.03);
   border: 1px solid var(--panel-border);
   border-radius: 10px;
   padding: 10px 14px;
@@ -665,8 +666,8 @@ word-break:break-all;
 }
 
 .chat-bubble--user p {
-  background: rgba(124,92,252,0.13);
-  border-color: rgba(124,92,252,0.3);
+  background: rgba(236,106,79,0.1);
+  border-color: rgba(236,106,79,0.28);
   color: var(--text-primary);
 }
 
@@ -694,12 +695,12 @@ word-break:break-all;
   gap: 10px;
   padding: 14px 20px;
   border-top: 1px solid var(--panel-border);
-  background: rgba(0,0,0,0.15);
+  background: rgba(42,38,33,0.02);
 }
 
 .chat-input {
   flex: 1;
-  background: rgba(255,255,255,0.04);
+  background: rgba(42,38,33,0.02);
   border: 1px solid var(--panel-border);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
