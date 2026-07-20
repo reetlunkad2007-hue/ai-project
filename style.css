@@ -73,14 +73,6 @@ body {
   animation: pulse-star 3s ease-in-out infinite;
 }
 
-.logo-icon-img {
-  height: 2.4rem;
-  width: 2.4rem;
-  object-fit: cover;
-  border-radius: 22%;
-  animation: pulse-star 3s ease-in-out infinite;
-}
-
 @keyframes pulse-star {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.6; transform: scale(0.9); }
@@ -114,7 +106,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  box-shadow: 0 1px 3px rgba(60, 42, 30, 0.06);
+  box-shadow: 0 1px 3px rgba(42, 38, 33, 0.04);
 }
 
 .panel-label {
